@@ -26,7 +26,7 @@ def play_game(secret_num):
             cows = 0
             save_guess = []
             attempts +=1
-            # Pokud hráč nesplní podmínky pro správný vstup je upzorněn a program se ukončí
+            # Pokud hráč nesplní podmínky pro správný vstup je upzorněn a vyzván pro opětovný vstup
             while True:
                 player_guess = input('ENTER FOUR NUMBERS: ')
                 if len(player_guess) > 4 or len(player_guess) < 4 or player_guess[0] == '0' or len(set(player_guess)) != len(player_guess):
