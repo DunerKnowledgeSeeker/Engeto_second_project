@@ -1,6 +1,3 @@
-# Program vyhodnotí tip uživatele
-# Program dále vypíše počet bull/ bulls (pokud uživatel uhodne jak číslo, tak jeho umístění), příp. cows/ cows (pokud uživatel uhodne pouze číslo, ale ne jeho umístění). 
-# Vrácené ohodnocení musí brát ohled na jednotné a množné číslo ve výstupu. Tedy 1 bull a 2 bulls (stejně pro cow/cows).
 import random as r
 import datetime
 
@@ -21,11 +18,11 @@ while True:
 
 def play_game(secret_num):
     attempts = 0
-    flag = ''
     while True:
         bulls = 0
         cows = 0
         player_guess = input('ENTER FOUR NUMBERS: ')
+        print(ODDELOVAC)
         save_guess = []
         attempts +=1
         if len(player_guess) > 4 or len(player_guess) < 4 or player_guess[0] == '0' or len(set(player_guess)) != len(player_guess) or player_guess.isalnum == False:
@@ -40,14 +37,16 @@ def play_game(secret_num):
                     cows += 1 
         if bulls > 1 or cows > 1:
             print(f'{bulls} Bulls, {cows} Cows')
+            print(ODDELOVAC)
         elif bulls == 1 or cows == 1:
             print(f'{bulls} Bull, {cows} Cow')
+            print(ODDELOVAC)
         if bulls == 4:
             print(f"Correct, you've guessed the right number in {attempts} guesses!")
             date = datetime.datetime.now()
             date_edit = date.strftime('%d/%m/%Y %X')
             with open('Statistics.txt', 'a') as sta:
-                sta.write(f'{date_edit} - Number o attempts: {attempts}')
+                sta.write(f'{date_edit} - Number o attempts: {attempts}\n')
                 return False
 
 play_game(secret_num)
