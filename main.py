@@ -1,35 +1,42 @@
 import random as r
 import datetime
 
-ODDELOVAC = 40 * "-"
+SEPARATOR = 40 * "-"
 
 print('Hi there!')
-print(ODDELOVAC)
+print(SEPARATOR)
 print("I've generated a random 4 digit number for you.\nLet's play a bulls and cows game.")
-print(ODDELOVAC)
+print(SEPARATOR)
 
+# Vygenerování náhodného čísla. Pokud je v listu, kde jsou číla uložená duplicita generuje se stále nový list dokud nejsou všechny čísla unikátní
 while True:
     secret_num = r.sample(range(1, 9),4)
     if len(set(secret_num)) != len(secret_num):
         continue
     else:
-        print(secret_num)
         break
 
+# Funkce, která řeší průběh celé hry, 
 def play_game(secret_num):
     attempts = 0
+    # Smyčka, která se ukončí až když hráč uhodne číslo 
     while True:
         bulls = 0
         cows = 0
         player_guess = input('ENTER FOUR NUMBERS: ')
-        print(ODDELOVAC)
+        print(SEPARATOR)
         save_guess = []
         attempts +=1
+        # Pokud hráč nesplní podmínky pro správný vstup je upzorněn a program se ukončí
         if len(player_guess) > 4 or len(player_guess) < 4 or player_guess[0] == '0' or len(set(player_guess)) != len(player_guess) or player_guess.isalnum == False:
             print('Wrong input. Your guess must cointains only numbers precisely 4 numbers, must not start with 0, every number must be unique.')
+            print('EXIT...')
             exit()
+        # Smyčka která uloží jednotlivá čísla z inputu do listu a změný datový typ na int
         for i in range(4):
             save_guess.append(int(player_guess[i]))
+        # Smyčka která kontroluje zda jsou nějaký čísla, které hráč háda na správném indexu nebo zda se aspoň nachází v hádaném čísle
+        # Pokud ano, tak se do proměnné bulls a cows přičte jedna za každý výskyt dle pravidel hry
         for i,num in enumerate(save_guess):
                 if save_guess[i] == secret_num[i]:
                     bulls += 1
@@ -37,10 +44,13 @@ def play_game(secret_num):
                     cows += 1 
         if bulls > 1 or cows > 1:
             print(f'{bulls} Bulls, {cows} Cows')
-            print(ODDELOVAC)
+            print(SEPARATOR)
         elif bulls == 1 or cows == 1:
             print(f'{bulls} Bull, {cows} Cow')
-            print(ODDELOVAC)
+            print(SEPARATOR)
+        # Pokud se proměnná bulls rovná čtyřem znamená to, že hráč uhádl hádané číslo
+        # do souboru Statistics.txt uložíme aktuální datum a čas s počtem pokusů za každou odehranou hru
+        # po uložení program vrátí False a tím se celá while smyčka ve které hra běží ukončí
         if bulls == 4:
             print(f"Correct, you've guessed the right number in {attempts} guesses!")
             date = datetime.datetime.now()
