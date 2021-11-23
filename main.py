@@ -59,7 +59,7 @@ def play_game(secret_num):
             # po uložení program vrátí False a tím se celá while smyčka ve které hra běží ukončí
             if bulls == 4:
                 print(f"Correct, you've guessed the right number in {attempts} guesses!")
-                 if attempts < 3:
+                if attempts < 3:
                     print('Amazing result! :)')
                 elif attempts > 3 and attempts < 8:
                     print('Average result.')
