@@ -18,45 +18,47 @@ while True:
 
 # Funkce, která řeší průběh celé hry, 
 def play_game(secret_num):
-    attempts = 0
     # Smyčka, která se ukončí až když hráč uhodne číslo 
-    while True:
-        bulls = 0
-        cows = 0
-        player_guess = input('ENTER FOUR NUMBERS: ')
-        print(SEPARATOR)
-        save_guess = []
-        attempts +=1
-        # Pokud hráč nesplní podmínky pro správný vstup je upzorněn a program se ukončí
-        if len(player_guess) > 4 or len(player_guess) < 4 or player_guess[0] == '0' or len(set(player_guess)) != len(player_guess) or player_guess.isalnum == False:
-            print('Wrong input. Your guess must cointains only numbers precisely 4 numbers, must not start with 0, every number must be unique.')
-            print('EXIT...')
-            exit()
-        # Smyčka která uloží jednotlivá čísla z inputu do listu a změný datový typ na int
-        for i in range(4):
-            save_guess.append(int(player_guess[i]))
-        # Smyčka která kontroluje zda jsou nějaký čísla, které hráč háda na správném indexu nebo zda se aspoň nachází v hádaném čísle
-        # Pokud ano, tak se do proměnné bulls a cows přičte jedna za každý výskyt dle pravidel hry
-        for i,num in enumerate(save_guess):
-                if save_guess[i] == secret_num[i]:
-                    bulls += 1
-                if num in secret_num and not save_guess[i] == secret_num[i]:
-                    cows += 1 
-        if bulls > 1 or cows > 1:
-            print(f'{bulls} Bulls, {cows} Cows')
+    try:
+        attempts = 0
+        while True:
+            bulls = 0
+            cows = 0
+            player_guess = input('ENTER FOUR NUMBERS: ')
             print(SEPARATOR)
-        elif bulls == 1 or cows == 1:
-            print(f'{bulls} Bull, {cows} Cow')
-            print(SEPARATOR)
-        # Pokud se proměnná bulls rovná čtyřem znamená to, že hráč uhádl hádané číslo
-        # do souboru Statistics.txt uložíme aktuální datum a čas s počtem pokusů za každou odehranou hru
-        # po uložení program vrátí False a tím se celá while smyčka ve které hra běží ukončí
-        if bulls == 4:
-            print(f"Correct, you've guessed the right number in {attempts} guesses!")
-            date = datetime.datetime.now()
-            date_edit = date.strftime('%d/%m/%Y %X')
-            with open('Statistics.txt', 'a') as sta:
-                sta.write(f'{date_edit} - Number o attempts: {attempts}\n')
-                return False
-
+            save_guess = []
+            attempts +=1
+            # Pokud hráč nesplní podmínky pro správný vstup je upzorněn a program se ukončí
+            if len(player_guess) > 4 or len(player_guess) < 4 or player_guess[0] == '0' or len(set(player_guess)) != len(player_guess):
+                print('Wrong input. Your guess must cointains only numbers precisely 4 numbers, must not start with 0, every number must be unique.')
+                print('EXIT...')
+                exit()
+            # Smyčka která uloží jednotlivá čísla z inputu do listu a změný datový typ na int
+            for i in range(4):
+                save_guess.append(int(player_guess[i]))
+            # Smyčka která kontroluje zda jsou nějaký čísla, které hráč háda na správném indexu nebo zda se aspoň nachází v hádaném čísle
+            # Pokud ano, tak se do proměnné bulls a cows přičte jedna za každý výskyt dle pravidel hry
+            for i,num in enumerate(save_guess):
+                    if save_guess[i] == secret_num[i]:
+                        bulls += 1
+                    if num in secret_num and not save_guess[i] == secret_num[i]:
+                        cows += 1 
+            if bulls > 1 or cows > 1:
+                print(f'{bulls} Bulls, {cows} Cows')
+                print(SEPARATOR)
+            elif bulls == 1 or cows == 1:
+                print(f'{bulls} Bull, {cows} Cow')
+                print(SEPARATOR)
+            # Pokud se proměnná bulls rovná čtyřem znamená to, že hráč uhádl hádané číslo
+            # do souboru Statistics.txt uložíme aktuální datum a čas s počtem pokusů za každou odehranou hru
+            # po uložení program vrátí False a tím se celá while smyčka ve které hra běží ukončí
+            if bulls == 4:
+                print(f"Correct, you've guessed the right number in {attempts} guesses!")
+                date = datetime.datetime.now()
+                date_edit = date.strftime('%d/%m/%Y %X')
+                with open('Statistics.txt', 'a') as sta:
+                    sta.write(f'{date_edit} - Number o attempts: {attempts}\n')
+                    return False
+    except ValueError:
+        print('Wrong input. You must type only numbers.')
 play_game(secret_num)
