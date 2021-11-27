@@ -79,11 +79,16 @@ def play_game(num_for_guess):
                 date_edit = date.strftime('%d/%m/%Y %X')
                 with open('Statistics.txt', 'a') as sta:
                     sta.write(f'{date_edit} - Number o attempts: {attempts}\n')
-            next_game = input("Do you want to play again? Type 'y' for yes or 'n' for no: ")
-            if next_game == 'n':
-                print('Hope you enjoy the game.')
-                print('Quitting the game.')
-                break
+            while bulls == 4:
+                next_game = input("Do you want to play again? Type 'y' for yes or 'n' for no: ")
+                if next_game == 'n':
+                    print('Hope you enjoy the game.')
+                    print('Quitting the game.')
+                    exit()
+                elif next_game == 'y':
+                    break
+                else:
+                    print('Wrong input')
         except ValueError:
             print('Wrong input. You must type only numbers.')
 
